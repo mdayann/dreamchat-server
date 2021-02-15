@@ -1,23 +1,23 @@
-/* eslint-disable object-curly-newline */
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
-
-const PORT = process.env.PORT || 5000;
-
-const router = require('./router');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server, { origins: '*:*' });
 
+//Allow CORS
 app.use(cors());
-app.use(router);
+
+//Parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//Parse requests of content-type - application/json
+app.use(bodyParser.json());
 
 io.on('connection', (socket) => {
   // eslint-disable-next-line consistent-return
@@ -68,4 +68,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => console.log(`🚀 Server has started on port ${PORT}`));
+require('./app/routes/routes')(app);
+
+server.listen(5000, () => console.log(`🚀 Server has started on port 5000`));
