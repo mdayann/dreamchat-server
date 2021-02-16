@@ -20,4 +20,4 @@ app.use(bodyParser.json());
 require('./app/controllers/socketio/socketio')(io);
 require('./app/routes/routes')(app);
 
-server.listen(5000, () => console.log(`🚀 Server has started on port 5000`));
+server.listen(PROCESS.ENV.PORT || 5000, () => console.log(`🚀 Server has started on port 5000`));
