@@ -1,4 +1,4 @@
-module.exports = function auth(req, res, next) {
+export default function auth(req: any, res: any, next: any) {
   console.info(`====> ${req.method} ${req.originalUrl}`);
 
   res.on('finish', () => {
@@ -10,4 +10,4 @@ module.exports = function auth(req, res, next) {
   });
 
   next();
-};
+}
